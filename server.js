@@ -75,7 +75,7 @@ const handleCommand = (name, content, ws) => {
   
 
   if (!isMod) {
-    ws.send(`System: Sulla ei oo modemiekkaa`);
+    ws.send(`System: Sulla ei oo modemiekkaa, et voi tehä näin`);
     return;
   }
   
