@@ -86,8 +86,7 @@ const handleCommand = (name, content, ws) => {
   if (cmd === "clear") { messages.length = 0; broadcast("System: Chat tyhjennettiin"); }
   else if (cmd === "announce") broadcast(`System: ${argsStr}`);
   else if (cmd === "mod") {
-    if (!argsStr) respond("Käyttö: !mod käyttäjänimi");
-    else if (mods.includes(argsStr)) respond(`${argsStr} on jo modemiekka`);
+    if (mods.includes(argsStr)) respond(`${argsStr} on jo modemiekka`);
     else { mods.push(argsStr); writeMods(mods); broadcast(`System: ${argsStr} on nyt modemiekka`); }
   }
   else if (cmd === "unmod") {
