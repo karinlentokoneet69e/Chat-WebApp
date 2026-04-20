@@ -58,11 +58,6 @@ li {
   border-left: 4px solid #4CAF50;
 }
 
-li.mod-message {
-  border-left-color: #00ff00;
-  background-color: #f0fff0;
-}
-
 .mod-badge {
   color: #00cc00;
   font-weight: bold;
@@ -77,19 +72,17 @@ li.mod-message {
   font-weight: bold;
 }
 
-li.vip-message {
-  border-left-color: #ffd700;
-  background-color: #fffacd;
-}
-
 .vip-badge {
-  color: #ffd700;
+  color: #a103a7;
   font-weight: bold;
   margin-right: 5px;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
 }
 
 .vip-name {
-  color: #ffd700;
+  color: #a103a7;
   font-weight: bold;
 }
 /* Chatin stylet */
