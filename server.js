@@ -45,7 +45,12 @@ app.post("/login", (req, res) => {
 
 // Chatin perus mekaniikka
 const messages = [];
-const ADMINS = ["karinlentokoneet69e"];
+const modsFile = path.join(__dirname, "mods.json");
+const readMods = () => {
+  try { return JSON.parse(fs.readFileSync(modsFile, "utf8")) || []; }
+  catch { return []; }
+};
+const writeMods = mods => fs.writeFileSync(modsFile, JSON.stringify(mods, null, 2));
 
 wss.on("connection", ws => {
   messages.forEach(msg => ws.send(msg));
@@ -65,6 +70,15 @@ wss.on("connection", ws => {
 
 // Chat komennot
 const handleCommand = (name, content, ws) => {
+  const mods = readMods();
+  const isMod = mods.includes(name);
+  
+
+  if (!isMod) {
+    ws.send(`System: Sulla ei oo modemiekkaa`);
+    return;
+  }
+  
   const [cmd, ...args] = content.slice(1).split(" ");
   const argsStr = args.join(" ");
   const respond = msg => ws.send(`System: ${msg}`);
@@ -73,8 +87,9 @@ const handleCommand = (name, content, ws) => {
   else if (cmd === "announce") broadcast(`System: ${argsStr}`);
   else if (cmd === "mod") {
     if (!argsStr) respond("Käyttö: !mod käyttäjänimi");
-    else if (ADMINS.includes(argsStr)) respond(`${argsStr} Tällä käyttäjällä on jo modemiekka`);
-    else { ADMINS.push(argsStr); broadcast(`System: ${argsStr} Tällä käyttäjällä on nyt modemiekka`); }
+    else if (mods.includes(argsStr)) respond(`${argsStr} Tällä käyttäjällä on jo modemiekka`);
+    else { mods.push(argsStr); writeMods(mods); broadcast(`System: ${argsStr} Tällä käyttäjällä on nyt modemiekka`); }
+    
   }
   else respond(`älä laita tällästä: ${cmd}`);
 };
