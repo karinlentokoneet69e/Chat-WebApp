@@ -6,12 +6,8 @@
 }
 
 #loginScreen {
-  text-align: center;
   margin-top: 100px;
-}
-
-#loginScreen input {
-  width: 250px;
+  text-align: center;
 }
 
 .error {
@@ -48,11 +44,6 @@ button {
   font-size: 14px;
   margin-left: 5px;
 }
-
-button:hover {
-  background-color: #45a049;
-}
-
 
 ul {
   list-style-type: none;
