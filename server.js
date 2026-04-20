@@ -53,7 +53,7 @@ wss.on("connection", ws => {
     const text = msg.toString();
     const [name, ...rest] = text.split(": ");
     const content = rest.join(": ");
-    if (content.startsWith("/")) {
+    if (content.startsWith("!")) {
       handleCommand(name, content, ws);
     } else {
       messages.push(text);
@@ -72,7 +72,7 @@ const handleCommand = (name, content, ws) => {
   if (cmd === "clear") { messages.length = 0; broadcast("System: Chat tyhjennettiin"); }
   else if (cmd === "announce") broadcast(`System: ${argsStr}`);
   else if (cmd === "mod") {
-    if (!argsStr) respond("Käyttö: /mod käyttäjänimi");
+    if (!argsStr) respond("Käyttö: !mod käyttäjänimi");
     else if (ADMINS.includes(argsStr)) respond(`${argsStr} Tällä käyttäjällä on jo modemiekka`);
     else { ADMINS.push(argsStr); broadcast(`System: ${argsStr} Tällä käyttäjällä on nyt modemiekka`); }
   }
