@@ -87,8 +87,8 @@ const handleCommand = (name, content, ws) => {
   else if (cmd === "announce") broadcast(`System: ${argsStr}`);
   else if (cmd === "mod") {
     if (!argsStr) respond("Käyttö: !mod käyttäjänimi");
-    else if (mods.includes(argsStr)) respond(`${argsStr} Tällä käyttäjällä on jo modemiekka`);
-    else { mods.push(argsStr); writeMods(mods); broadcast(`System: ${argsStr} Tällä käyttäjällä on nyt modemiekka`); }
+    else if (mods.includes(argsStr)) respond(`${argsStr} on jo modemiekka`);
+    else { mods.push(argsStr); writeMods(mods); broadcast(`System: ${argsStr} on nyt modemiekka`); }
     
   }
   else respond(`älä laita tällästä: ${cmd}`);
