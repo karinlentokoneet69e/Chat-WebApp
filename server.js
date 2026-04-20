@@ -61,8 +61,11 @@ wss.on("connection", ws => {
     if (content.startsWith("!")) {
       handleCommand(name, content, ws);
     } else {
-      messages.push(text);
-      broadcast(text);
+      const mods = readMods();
+      const isMod = mods.includes(name);
+      const msgObj = JSON.stringify({ name, text: content, isMod });
+      messages.push(msgObj);
+      broadcast(msgObj);
     }
   });
 });

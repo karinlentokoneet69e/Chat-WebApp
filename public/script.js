@@ -78,7 +78,17 @@ const connectWebSocket = () => {
   ws = new WebSocket(`ws://${location.host}`);
   ws.onmessage = e => {
     const li = document.createElement("li");
-    li.textContent = e.data;
+    try {
+      const msg = JSON.parse(e.data);
+      if (msg.isMod) {
+        li.classList.add("mod-message");
+        li.innerHTML = `<img class="mod-badge" src="mod-badge.png" alt="mod"><span class="mod-name">${msg.name}</span>: ${msg.text}`;
+      } else {
+        li.textContent = msg.name + ": " + msg.text;
+      }
+    } catch {
+      li.textContent = e.data;
+    }
     el("chat").appendChild(li);
   };
 };
