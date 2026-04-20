@@ -89,7 +89,11 @@ const handleCommand = (name, content, ws) => {
     if (!argsStr) respond("Käyttö: !mod käyttäjänimi");
     else if (mods.includes(argsStr)) respond(`${argsStr} on jo modemiekka`);
     else { mods.push(argsStr); writeMods(mods); broadcast(`System: ${argsStr} on nyt modemiekka`); }
-    
+  }
+  else if (cmd === "unmod") {
+    if (!argsStr) respond("Käyttö: !unmod käyttäjänimi");
+    else if (!mods.includes(argsStr)) respond(`${argsStr} ei oo modemiekkaa`);
+    else { writeMods(mods.filter(m => m !== argsStr)); broadcast(`System: ${argsStr} ei oo enää modemiekka`); }
   }
   else respond(`älä laita tällästä: ${cmd}`);
 };
