@@ -82,13 +82,15 @@ const connectWebSocket = () => {
       const msg = JSON.parse(e.data);
       if (msg.isMod) {
         li.classList.add("mod-message");
-        li.innerHTML = `<img class="mod-badge" src="mod-badge.png" alt="mod"><span class="mod-name">${msg.name}</span>: ${msg.text}`;
+        badges = `<img class="mod-badge" src="mod-badge.png" alt="mod">`;
       } else if (msg.isVip) {
         li.classList.add("vip-message");
-        li.innerHTML = `<img class="vip-badge" src="vip-badge.png" alt="vip"><span class="vip-name">${msg.name}</span>: ${msg.text}`;
+        badges = `<img class="mod-badge" src="vip-badge.png" alt="vip">`;
       } else {
-        li.textContent = msg.name + ": " + msg.text;
+        badges = "";
       }
+      li.classList.add(msg.isMod ? "mod-message" : msg.isVip ? "vip-message" : "");
+      li.innerHTML = `${badges}<span class="${msg.isMod ? "mod-name" : msg.isVip ? "vip-name" : ""}">${msg.name}</span>: ${msg.text}`;
     } catch {
       li.textContent = e.data;
     }

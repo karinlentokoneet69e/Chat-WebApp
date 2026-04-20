@@ -71,7 +71,7 @@ wss.on("connection", ws => {
       const vips = readVips();
       const isMod = mods.includes(name);
       const isVip = vips.includes(name);
-      const msgObj = JSON.stringify({ name, text: content, isMod, isVip });
+      const msgObj = JSON.stringify({ name, text: content, isMod, isVip, isBoth: isMod && isVip });
       messages.push(msgObj);
       broadcast(msgObj);
     }
