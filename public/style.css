@@ -76,4 +76,20 @@ li.mod-message {
   color: #00cc00;
   font-weight: bold;
 }
+
+li.vip-message {
+  border-left-color: #ffd700;
+  background-color: #fffacd;
+}
+
+.vip-badge {
+  color: #ffd700;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.vip-name {
+  color: #ffd700;
+  font-weight: bold;
+}
 /* Chatin stylet */

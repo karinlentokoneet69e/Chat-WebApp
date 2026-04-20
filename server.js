@@ -46,11 +46,17 @@ app.post("/login", (req, res) => {
 // Chatin perus mekaniikka
 const messages = [];
 const modsFile = path.join(__dirname, "mods.json");
+const vipsFile = path.join(__dirname, "vips.json");
 const readMods = () => {
   try { return JSON.parse(fs.readFileSync(modsFile, "utf8")) || []; }
   catch { return []; }
 };
 const writeMods = mods => fs.writeFileSync(modsFile, JSON.stringify(mods, null, 2));
+const readVips = () => {
+  try { return JSON.parse(fs.readFileSync(vipsFile, "utf8")) || []; }
+  catch { return []; }
+};
+const writeVips = vips => fs.writeFileSync(vipsFile, JSON.stringify(vips, null, 2));
 
 wss.on("connection", ws => {
   messages.forEach(msg => ws.send(msg));
@@ -62,8 +68,10 @@ wss.on("connection", ws => {
       handleCommand(name, content, ws);
     } else {
       const mods = readMods();
+      const vips = readVips();
       const isMod = mods.includes(name);
-      const msgObj = JSON.stringify({ name, text: content, isMod });
+      const isVip = vips.includes(name);
+      const msgObj = JSON.stringify({ name, text: content, isMod, isVip });
       messages.push(msgObj);
       broadcast(msgObj);
     }
@@ -93,8 +101,18 @@ const handleCommand = (name, content, ws) => {
     else { mods.push(argsStr); writeMods(mods); broadcast(`System: ${argsStr} on nyt modemiekka`); }
   }
   else if (cmd === "unmod") {
-  if (!mods.includes(argsStr)) respond(`${argsStr} ei oo modemiekkaa`);
-    else { writeMods(mods.filter(m => m !== argsStr)); broadcast(`System: ${argsStr} ei oo enää modemiekka`); }
+    if (!mods.includes(argsStr)) respond(`${argsStr} ei oo modemiekkaa`);
+    else { writeMods(mods.filter(m => m !== argsStr)); broadcast(`System: ${argsStr} ei oo enää modemiekkaa`); }
+  }
+  else if (cmd === "vip") {
+    const vips = readVips();
+    if (vips.includes(argsStr)) respond(`${argsStr} on jo vip`);
+    else { vips.push(argsStr); writeVips(vips); broadcast(`System: ${argsStr} on nyt vip`); }
+  }
+  else if (cmd === "unvip") {
+    const vips = readVips();
+    if (!vips.includes(argsStr)) respond(`${argsStr} ei oo vip`);
+    else { writeVips(vips.filter(v => v !== argsStr)); broadcast(`System: ${argsStr} ei oo enää vip`); }
   }
   else respond(`älä laita tällästä: ${cmd}`);
 };

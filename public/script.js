@@ -83,6 +83,9 @@ const connectWebSocket = () => {
       if (msg.isMod) {
         li.classList.add("mod-message");
         li.innerHTML = `<img class="mod-badge" src="mod-badge.png" alt="mod"><span class="mod-name">${msg.name}</span>: ${msg.text}`;
+      } else if (msg.isVip) {
+        li.classList.add("vip-message");
+        li.innerHTML = `<span class="vip-badge">⭐</span><span class="vip-name">${msg.name}</span>: ${msg.text}`;
       } else {
         li.textContent = msg.name + ": " + msg.text;
       }
