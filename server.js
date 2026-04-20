@@ -22,8 +22,8 @@ const writeUsers = users => fs.writeFileSync(usersFile, JSON.stringify(users, nu
 
 app.post("/register", (req, res) => {
   const { username, password } = req.body;
-  if (!username || !password || username.length < 3 || password.length < 4) {
-    return res.json({ success: false, message: "Käyttäjänimi 3+ merkkiä, salasana 4+ merkkiä" });
+  if (!username || !password || username.length < 1 || password.length < 4) {
+    return res.json({ success: false, message: "Käyttäjänimi 1+ ja salasana 4+ merkkiä " });
   }
   const users = readUsers();
   if (users[username]) return res.json({ success: false, message: "Käyttäjä tällä nimellä on jo" });
@@ -71,10 +71,10 @@ const handleCommand = (name, content, ws) => {
   
   if (cmd === "clear") { messages.length = 0; broadcast("System: Chat tyhjennettiin"); }
   else if (cmd === "announce") broadcast(`System: ${argsStr}`);
-  else if (cmd === "admin") {
-    if (!argsStr) respond("Käyttö: /admin käyttäjänimi");
-    else if (ADMINS.includes(argsStr)) respond(`${argsStr} on jo admin`);
-    else { ADMINS.push(argsStr); broadcast(`System: ${argsStr} on nyt admin!`); }
+  else if (cmd === "mod") {
+    if (!argsStr) respond("Käyttö: /mod käyttäjänimi");
+    else if (ADMINS.includes(argsStr)) respond(`${argsStr} Tällä käyttäjällä on jo modemiekka`);
+    else { ADMINS.push(argsStr); broadcast(`System: ${argsStr} Tällä käyttäjällä on nyt modemiekka`); }
   }
   else respond(`älä laita tällästä: ${cmd}`);
 };
