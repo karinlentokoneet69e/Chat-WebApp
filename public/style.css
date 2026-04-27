@@ -66,12 +66,6 @@ li {
   width: 16px;
   vertical-align: middle;
 }
-
-.mod-name {
-  color: #00cc00;
-  font-weight: bold;
-}
-
 .vip-badge {
   color: #a103a7;
   font-weight: bold;
@@ -79,10 +73,5 @@ li {
   height: 16px;
   width: 16px;
   vertical-align: middle;
-}
-
-.vip-name {
-  color: #a103a7;
-  font-weight: bold;
 }
 /* Chatin stylet */

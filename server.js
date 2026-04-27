@@ -121,4 +121,4 @@ const handleCommand = (name, content, ws) => {
 const broadcast = msg => wss.clients.forEach(c => c.readyState === WebSocket.OPEN && c.send(msg));
 
 server.listen(3000, "0.0.0.0", () => 
-console.log("servu pääl: http://10.146.4.241:3000"));
+console.log("pitäs toimii"));
