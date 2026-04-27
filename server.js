@@ -13,6 +13,8 @@ app.use(express.json());
 app.get("/", (req, res) => res.redirect("/client.html"));
 
 // Kirjautumis ja registeröinti mekaniikat
+const modsFile = path.join(__dirname, "mods.json");
+const vipsFile = path.join(__dirname, "vips.json");
 const usersFile = path.join(__dirname, "users.json");
 const readUsers = () => {
   try { return JSON.parse(fs.readFileSync(usersFile, "utf8")); }
@@ -23,7 +25,7 @@ const writeUsers = users => fs.writeFileSync(usersFile, JSON.stringify(users, nu
 app.post("/register", (req, res) => {
   const { username, password } = req.body;
   if (!username || !password || username.length < 1 || password.length < 4) {
-    return res.json({ success: false, message: "Käyttäjänimi 1+ ja salasana 4+ merkkiä " });
+    return res.json({ success: false, message: "Käyttäjänimi pitää olla 1+ ja salasana 4+ merkkiä " });
   }
   const users = readUsers();
   if (users[username]) return res.json({ success: false, message: "Käyttäjä tällä nimellä on jo" });
@@ -45,8 +47,6 @@ app.post("/login", (req, res) => {
 
 // Chatin perus mekaniikka
 const messages = [];
-const modsFile = path.join(__dirname, "mods.json");
-const vipsFile = path.join(__dirname, "vips.json");
 const readMods = () => {
   try { return JSON.parse(fs.readFileSync(modsFile, "utf8")) || []; }
   catch { return []; }
